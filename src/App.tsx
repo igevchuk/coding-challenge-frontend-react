@@ -5,6 +5,8 @@ import Page404 from './views/404';
 import Details from './views/details';
 import Home from './views/home';
 
+import 'semantic-ui-css/semantic.min.css';
+
 const App = () => (
   <Router>
     <Switch>

@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { BaseLayout } from './../../containers';
 
 class Home extends React.Component {
   public render() {
     return (
-      <div>
-        Home
-      </div>
+      <BaseLayout>
+          <h1>Home</h1>
+      </BaseLayout>
     );
   }
 }
