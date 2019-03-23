@@ -4,9 +4,9 @@ export const FETCH_INCIDENTS_FAILURE = 'FETCH_INCIDENTS_FAILURE';
 
 export const SEARCH_INCIDENTS = 'SEARCH_INCIDENTS';
 
-export const FETCH_INCIDENT = 'FETCH_INCIDENT';
-export const FETCH_INCIDENT_SUCCESS = 'FETCH_INCIDENT_SUCCESS';
-export const FETCH_INCIDENT_FAILURE = 'FETCH_INCIDENT_FAILURE';
+export const FETCH_INCIDENT_DETAILS = 'FETCH_INCIDENT_DETAILS';
+export const FETCH_INCIDENT_DETAILS_SUCCESS = 'FETCH_INCIDENT_DETAILS_SUCCESS';
+export const FETCH_INCIDENT_DETAILS_FAILURE = 'FETCH_INCIDENT_DETAILS_FAILURE';
 
 export const fetchIncidents = () => ({
   type: FETCH_INCIDENTS
@@ -27,17 +27,17 @@ export const searchIncidents = (query) => ({
   query
 });
 
-export const fetchIncident = (id) => ({
-  type: FETCH_INCIDENT,
+export const fetchIncidentDetails = (id) => ({
+  type: FETCH_INCIDENT_DETAILS,
   id
 });
 
-export const fetchIncidentSuccess = (payload) => ({
-  type: FETCH_INCIDENT_SUCCESS,
+export const fetchIncidentDetailsSuccess = (payload) => ({
+  type: FETCH_INCIDENT_DETAILS_SUCCESS,
   payload
 });
 
-export const fetchIncidentFailure = (message) => ({
-  type: FETCH_INCIDENT_FAILURE,
+export const fetchIncidentDetailsFailure = (message) => ({
+  type: FETCH_INCIDENT_DETAILS_FAILURE,
   message
 });

@@ -2,10 +2,10 @@ import {
   FETCH_INCIDENTS,
   FETCH_INCIDENTS_FAILURE,
   FETCH_INCIDENTS_SUCCESS,
-  FETCH_INCIDENT,
-  FETCH_INCIDENT_SUCCESS,
-  FETCH_INCIDENT_FAILURE,
-  SEARCH_INCIDENTS
+  SEARCH_INCIDENTS,
+  FETCH_INCIDENT_DETAILS,
+  FETCH_INCIDENT_DETAILS_SUCCESS,
+  FETCH_INCIDENT_DETAILS_FAILURE
 } from '../actions';
 
 const initialState = {
@@ -42,19 +42,19 @@ export default function rootReducer(state = initialState, action) {
         isLoading: false,
         error: action.message
       };
-    case FETCH_INCIDENT:
+    case FETCH_INCIDENT_DETAILS:
       return {
         ...state,
         isLoading: true,
         error: null
       };
-    case FETCH_INCIDENT_SUCCESS:
+    case FETCH_INCIDENT_DETAILS_SUCCESS:
       return {
         incidents: [...action.payload],
         isLoading: false,
         error: null
       };
-    case FETCH_INCIDENT_FAILURE:
+    case FETCH_INCIDENT_DETAILS_FAILURE:
       return {
         incidents: [],
         isLoading: false,
