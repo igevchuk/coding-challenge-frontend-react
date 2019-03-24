@@ -32,9 +32,13 @@ export default function rootReducer(state = initialState, action) {
       };
     case FETCH_INCIDENTS_SUCCESS:
       return {
-        incidents: [...action.payload],
-        isLoading: false,
-        error: null
+        ...state,
+        incidents: {
+          ...state.incidents,
+          data: [...action.payload],
+          isLoading: false,
+          error: null
+        }
       };
     case FETCH_INCIDENTS_FAILURE:
       return {
