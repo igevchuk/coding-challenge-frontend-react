@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import { ajax } from 'rxjs/observable/dom/ajax';
+import { IIncident as Incident } from './../model';
 import config from './../config';
 
 import {
