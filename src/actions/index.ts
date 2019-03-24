@@ -12,8 +12,9 @@ export const FETCH_INCIDENT_DETAILS_FAILURE = 'FETCH_INCIDENT_DETAILS_FAILURE';
 
 export const CANCEL_FETCH = 'CANCEL_FETCH';
 
-export const fetchIncidents = (): {} => ({
-  type: FETCH_INCIDENTS
+export const fetchIncidents = (options: {}): {} => ({
+  type: FETCH_INCIDENTS,
+  options
 });
 
 export const fetchIncidentsSuccess = (payload: Incident[]): {} => ({

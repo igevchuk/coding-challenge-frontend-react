@@ -48,9 +48,9 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         incidents: {
           ...state.incidents,
-          data: [...action.payload],
+          data: [],
           isLoading: false,
-          error: null
+          error: action.message
         }
       };
     case FETCH_INCIDENT_DETAILS:
