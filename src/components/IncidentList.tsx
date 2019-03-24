@@ -26,11 +26,11 @@ const IncidentLitItem: React.SFC<{ incident: Incident }> = ({ incident, ...props
     <IncidentCard fluid={true} raised={true}>
       <Grid padded={true}>
         <Grid.Row>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Image src={incident.media.image_url_thumb} bordered={true} />
           </Grid.Column>
 
-          <Grid.Column width={12}>
+          <Grid.Column width={13}>
             <IncidentCardHeader as="h3">
               <Link to={`/details/${incident.id}`}>{incident.title}</Link>
             </IncidentCardHeader>
@@ -42,7 +42,7 @@ const IncidentLitItem: React.SFC<{ incident: Incident }> = ({ incident, ...props
             <IncidentCardDescription>
               {incident.description}
             </IncidentCardDescription>
-            
+
             <IncidentCardFooter>{renderFooterContent()}</IncidentCardFooter>
           </Grid.Column>
         </Grid.Row>

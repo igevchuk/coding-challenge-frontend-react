@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { BaseLayout } from './../../containers';
+import Filter from './../../components/Filter';
 import IncidentList from './../../components/IncidentList';
 import ErrorMessage from './../../components/ErrorMessage';
 import Spinner from './../../components/Spinner';
@@ -19,15 +20,15 @@ interface IProps {
 }
 interface IState {
   search: string,
-  fromDate: Date,
-  toDate: Date,
+  startDate: Date,
+  endDate: Date,
   currentPage: number
 }
 class Home extends React.Component<IProps, IState> {
   public state = {
     search: "",
-    fromDate: null,
-    toDate: null,
+    startDate: null,
+    endDate: null,
     currentPage: 1
   };
 
@@ -36,7 +37,9 @@ class Home extends React.Component<IProps, IState> {
     const options = {
       page: currentPage,
       incident_type: "theft",
-      proximity: `${config.default_location.latitude},${config.default_location.longitude}`,
+      proximity: `${config.default_location.latitude},${
+        config.default_location.longitude
+      }`,
       proximity_square: 100,
       per_page: 10
     };
@@ -44,20 +47,23 @@ class Home extends React.Component<IProps, IState> {
     this.props.fetchIncidents(options);
   }
 
-  public handleSearch(value) {
+  public handleSearch({ target }) {
+    const value = target.value;
     this.setState({ search: value }, () => {
       this.props.searchIncidents({});
     });
   }
 
-  public updateDate() {}
+  public handleDateChange(e, name) {
+    console.log(e)
+  }
 
   public renderContent() {
     const { incidents, error, isLoading } = this.props;
 
-    if(isLoading) {
+    if (isLoading) {
       return <Spinner />;
-    } else if(!!error) {
+    } else if (!!error) {
       return <ErrorMessage />;
     } else {
       return <IncidentList incidents={incidents} />;
@@ -66,12 +72,22 @@ class Home extends React.Component<IProps, IState> {
 
   public render() {
     const { incidents, isLoading, error } = this.props;
+    const { search, startDate, endDate } = this.state;
+
     console.log(incidents);
     return (
       <BaseLayout>
         <h1>Home</h1>
 
-       {this.renderContent()}
+        <Filter
+          search={search}
+          startDate={startDate}
+          endDate={endDate}
+          handleSearch={this.handleSearch}
+          handleDateChange={this.handleDateChange}
+        />
+
+        {this.renderContent()}
       </BaseLayout>
     );
   }
