@@ -5,7 +5,7 @@ export interface IIncident {
   location_description: string,
   location_type: string,
   media: IMedia,
-  occurred_at: number,
+  occurred_at: Date,
   source: string,
   title: string
   type: string,

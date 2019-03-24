@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.1",
+    "moment": "^2.24.0",
     "query-string": "^6.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

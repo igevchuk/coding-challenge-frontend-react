@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Grid } from 'semantic-ui-react';
 import { BaseLayout } from './../../containers';
 import IncidentList from './../../components/IncidentList';
+import ErrorMessage from './../../components/ErrorMessage';
+import Spinner from './../../components/Spinner';
 
 import { fetchIncidents, searchIncidents } from "./../../actions";
 import { IIncident as Incident } from './../../model';
+import config from './../../config';
 
 interface IProps {
   incidents: Incident[],
@@ -32,7 +36,9 @@ class Home extends React.Component<IProps, IState> {
     const options = {
       page: currentPage,
       incident_type: "theft",
-      proximity: 100
+      proximity: `${config.default_location.latitude},${config.default_location.longitude}`,
+      proximity_square: 100,
+      per_page: 10
     };
 
     this.props.fetchIncidents(options);
@@ -46,13 +52,26 @@ class Home extends React.Component<IProps, IState> {
 
   public updateDate() {}
 
+  public renderContent() {
+    const { incidents, error, isLoading } = this.props;
+
+    if(isLoading) {
+      return <Spinner />;
+    } else if(!!error) {
+      return <ErrorMessage />;
+    } else {
+      return <IncidentList incidents={incidents} />;
+    }
+  }
+
   public render() {
     const { incidents, isLoading, error } = this.props;
     console.log(incidents);
     return (
       <BaseLayout>
         <h1>Home</h1>
-        <IncidentList incidents={incidents} />
+
+       {this.renderContent()}
       </BaseLayout>
     );
   }
