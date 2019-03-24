@@ -27,8 +27,11 @@ export default function rootReducer(state = initialState, action) {
     case SEARCH_INCIDENTS:
       return {
         ...state,
-        isLoading: true,
-        error: null
+        incidents: {
+          ...state.incidents,
+          isLoading: true,
+          error: null
+        }
       };
     case FETCH_INCIDENTS_SUCCESS:
       return {
@@ -42,9 +45,13 @@ export default function rootReducer(state = initialState, action) {
       };
     case FETCH_INCIDENTS_FAILURE:
       return {
-        incidents: [],
-        isLoading: false,
-        error: action.message
+        ...state,
+        incidents: {
+          ...state.incidents,
+          data: [...action.payload],
+          isLoading: false,
+          error: null
+        }
       };
     case FETCH_INCIDENT_DETAILS:
       return {

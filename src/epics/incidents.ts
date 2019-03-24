@@ -1,19 +1,16 @@
 import { Observable } from 'rxjs';
-// import 'rxjs/add/operator/switchMap';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/takeUntil';
-// import 'rxjs/add/operator/throttle';
-// import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import { switchMap, map, takeUntil } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, takeUntil, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/observable/dom/ajax';
+import { ofType } from "redux-observable";
 
 import { IIncident as Incident } from './../model';
 import config from './../config';
 
 import {
+  FETCH_INCIDENTS,
+  SEARCH_INCIDENTS,
   CANCEL_FETCH,
-  fetchIncidents,
   fetchIncidentsFailure,
   fetchIncidentsSuccess,
   searchIncidents
@@ -22,43 +19,28 @@ import {
 const url = config.API_URL;
 
 export function fetchIncidentsEpic(action$) {
-  // return action$
-  //   .ofType(fetchIncidents)
-  //   .switchMap(() => ajax.getJSON(url))
-  //   .map(({ incidents }) => incidents)
-  //   .map(incidents => fetchIncidentsSuccess(incidents))
-  //   .takeUntil(action$.ofType(CANCEL_FETCH))
-  //   .catch(error => Observable.of(fetchIncidentsFailure(error.message)));
-    return action$.ofType(fetchIncidents).pipe(
+    return action$.pipe(
+      ofType(FETCH_INCIDENTS),
       switchMap(() =>
         ajax(url).pipe(
-          map((response: any) => response.incidents),
-          map(incidents => fetchIncidentsSuccess(incidents)),
-          takeUntil(action$.ofType(CANCEL_FETCH))
-          // catch(error => Observable.of(fetchIncidentsFailure(error.message)));
+          map(({ response }) => response),
+          map(({ incidents }) => fetchIncidentsSuccess(incidents)),
+          takeUntil(action$.ofType(CANCEL_FETCH)),
+          catchError(error => of(fetchIncidentsFailure(error.message))),
         )
       )
     );
 }
 
 export function searchIncidentsEpic(action$) {
-  // return action$
-  //   .ofType(searchIncidents)
-  //   // .throttle(200)
-  //   .switchMap(() => {
-  //     return ajax.getJSON(url);
-  //   })
-  //   .map(({ incidents }) => incidents)
-  //   .map(incidents => fetchIncidentsSuccess(incidents))
-  //   .takeUntil(action$.ofType(CANCEL_FETCH))
-  //   .catch(error => Observable.of(fetchIncidentsFailure(error.message)));
-  return action$.ofType(fetchIncidents).pipe(
+  return action$.pipe(
+    ofType(SEARCH_INCIDENTS),
     switchMap(() =>
-      ajax.getJSON(url).pipe(
-        map(({ incidents }) => incidents),
-        map(incidents => fetchIncidentsSuccess(incidents)),
-        takeUntil(action$.ofType(CANCEL_FETCH))
-        // catch(error => Observable.of(fetchIncidentsFailure(error.message)));
+      ajax(url).pipe(
+        map(({ response }) => response),
+        map(({ incidents }) => fetchIncidentsSuccess(incidents)),
+        takeUntil(action$.ofType(CANCEL_FETCH)),
+        catchError(error => of(fetchIncidentsFailure(error.message)))
       )
     )
   );

@@ -12,7 +12,8 @@
     "no-duplicate-variable": true,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "no-console": false
+    "no-console": false,
+    "no-empty": false
   },
   "jsRules": true
 }

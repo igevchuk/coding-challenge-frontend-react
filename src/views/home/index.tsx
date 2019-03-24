@@ -29,6 +29,19 @@ class Home extends React.Component<IProps, IState> {
     this.props.fetchIncidents();
   }
 
+  public updateSearch(value) {
+    this.setState({ search: value}, () => {
+      this.searchIncidents();
+    });
+  }
+
+  public searchIncidents() {
+
+  }
+
+  public updateDate() {
+  }
+
   public render() {
     console.log(this.props)
     return (
